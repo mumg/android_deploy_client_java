@@ -1,0 +1,53 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          package="io.appservice.module.liberty">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.INSTALL_PACKAGES" tools:ignore="ProtectedPermissions"/>
+
+    <application
+        android:name="io.appservice.module.ModuleApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <receiver android:name="io.appservice.core.broadcast.DebugReceiver" android:exported="true">
+            <intent-filter>
+                <action android:name="io.appservice.module.DEBUG"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="io.appservice.core.broadcast.BroadcastIntent">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <activity
+            android:name="io.appservice.module.activity.StatusActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:enabled="true"
+            android:exported="true">
+        </activity>
+        <service
+            android:name="io.appservice.module.KeepAliveJob"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:enabled="true">
+        </service>
+        <service
+            android:name="io.appservice.module.AppService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="d8591263fe622f85cda22e0888affe93077b6ac3"
+            />
+    </application>
+</manifest>

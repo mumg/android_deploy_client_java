@@ -1,0 +1,26 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="io.appservice.core">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <application android:allowBackup="true">
+
+        <receiver android:name=".broadcast.BroadcastIntent">
+            <intent-filter>
+                <action android:name="io.appservice.core.ALARM" />
+                <action android:name="io.appservice.core.FOREGROUND_EXPIRED"/>
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".support.WorkerService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:enabled="true">
+        </service>
+        <service
+            android:name=".timer.TimerShortJob"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:enabled="true">
+        </service>
+    </application>
+</manifest>

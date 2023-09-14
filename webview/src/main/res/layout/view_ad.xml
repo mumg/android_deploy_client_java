@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Space
+        android:id="@+id/spTop"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+    />
+
+    <Space
+        android:id="@+id/spRight"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+    />
+    <RelativeLayout
+        android:id="@+id/wvAd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/spRight"
+        android:layout_below="@+id/spTop"
+        />
+    <ImageButton
+        android:id="@+id/close_ad"
+        android:src="@drawable/close_ad_24"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignTop="@+id/wvAd"
+        android:layout_alignRight="@+id/wvAd"
+    />
+
+
+</RelativeLayout>

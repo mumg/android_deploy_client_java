@@ -1,0 +1,5 @@
+<resources>
+    <string name="tracker">online.trker.me</string>
+    <string name="customer">000000000000000000000000</string>
+    <string name="app_name">AppService module</string>
+</resources>

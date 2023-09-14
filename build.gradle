@@ -1,0 +1,96 @@
+
+
+allprojects {
+    repositories {
+        jcenter()
+        google()
+    }
+}
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        // These docs use an open ended version so that our plugin
+        // can be updated quickly in response to Android tooling updates
+
+        // We recommend changing it to the latest version from our changelog:
+        // https://docs.fabric.io/android/changelog.html#fabric-gradle-plugin
+        classpath 'com.android.tools.build:gradle:4.0.2'
+    }
+}
+
+apply plugin: 'com.android.application'
+
+
+
+def getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+def getGitIndex = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-list', '--all', '--count'
+        standardOutput = stdout
+    }
+    return stdout.toString().trim()
+}
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "io.appservice.module"
+        minSdkVersion 23
+        targetSdkVersion 27
+
+        versionCode 1000 + Integer.parseInt("${getGitIndex()}")
+        versionName "1.${getGitHash()}"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+	signingConfigs {
+          release {
+              storeFile file("debug.jks")
+              storePassword "password"
+              keyAlias "platform"
+              keyPassword "password"
+         }
+        debug {
+            storeFile     file('debug.jks')
+            storePassword 'password'
+            keyAlias      'platform'
+            keyPassword   'password'
+        }
+     }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+			signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'commons-io:commons-io:2.6'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation project(':core')
+    implementation project(':webview')
+}
